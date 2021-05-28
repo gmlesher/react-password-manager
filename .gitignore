@@ -1,5 +1,9 @@
+# my json file for storing encrypted passwords
+pw_data.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.DS_Store
 *.py[cod]
 *$py.class
 

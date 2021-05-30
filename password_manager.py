@@ -18,12 +18,10 @@ def main():
         while choice != 'Q':
             if choice == '1':
                 create()
-                choice = menu()
             if choice == '2':
                 find_pw()
             if choice == '3':
                 find_apps()
-                choice = menu()
             else:
                 choice = menu()
     else:
@@ -34,13 +32,13 @@ def main():
 def restart():
     """Prompts user if they would like to try entering application
     password again if previous attempt was incorrect."""
-    ask = input('Would you like to try again (y/n): ')
+    ask = input('\nWould you like to try again (y/n): ')
     if ask.lower() == 'y':
         main()
     elif ask.lower() == 'n':
         quit()
     else:
-        print("I didn't understand that input please type 'y' or 'n'")
+        print("\nI didn't understand that input. Please type 'y' or 'n'")
         restart()
 
 main()

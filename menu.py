@@ -1,6 +1,7 @@
 from encrypt import encrypt, load_and_dump
 from hash_me import hash_password
 from database import store_passwords, find_password, find_app_or_website
+import string, secrets
 
 def menu():
     """Prints password manager menu and prompts for input of numbered options"""
@@ -17,7 +18,7 @@ def menu():
 def create():
     """Prompts user for each step required to store password and account information"""
     app_name = input('Please provide the name of the site or app you want to generate a password for: ')
-    plaintext = input('Please provide a password for this site: ')
+    plaintext = generate_password(app_name)
     encrypted = encrypt(plaintext)
     load_and_dump(app_name, encrypted)
     password = hash_password(plaintext)
@@ -51,9 +52,9 @@ def create_another():
     if ask.lower() == 'y':
         create()
     elif ask.lower() == 'n':
-        pass
+        return
     else:
-        print("\nI didn't understand that input please type 'y' or 'n'")
+        print("\nI didn't understand that input. Please type 'y' or 'n'")
         create_another()
 
 
@@ -64,20 +65,43 @@ def find_another_pw():
     if ask.lower() == 'y':
         find_pw()
     elif ask.lower() == 'n':
-        pass
+        return
     else:
-        print("\nI didn't understand that input please type 'y' or 'n'")
+        print("\nI didn't understand that input. Please type 'y' or 'n'")
         find_another_pw()
 
 
-def find_another_account():
+def find_another_account():  
     """prompts user if they would like to find another account 
     based on a given email"""
     ask = input('\nWould you like to find accounts associated with another email? (y/n): ')
     if ask.lower() == 'y':
         find_apps()
     elif ask.lower() == 'n':
-        pass
+        return
     else:
-        print("\nI didn't understand that input please type 'y' or 'n'")
+        print("\nI didn't understand that input. Please type 'y' or 'n'")
         find_another_account()
+
+def generate_password(app_name):
+    """either generates a random password for user or 
+    lets them create their own for an account"""
+    while True:
+        ask_random = input(f'Would you like a randomly generated password for "{app_name}"? (y/n): ')
+        if ask_random.lower() == 'y':
+            alph_digits_punct = string.ascii_letters + string.digits + string.punctuation
+            while True:
+                password = ''.join(secrets.choice(alph_digits_punct) for i in range(25))
+                if (any(c.islower() for c in password)
+                        and any(c.isupper() for c in password)
+                        and any(not c.isalnum() for c in password)):
+                    break
+            print(f'\nThe generated password is:\n\n{password}\n')
+            return password
+        elif ask_random.lower() == 'n':
+            password = input('Please provide a password for this site: ')
+            print(password)
+            return password
+        else:
+            print("\nI didn't understand that input. Please type 'y' or 'n'")
+            continue

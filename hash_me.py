@@ -15,7 +15,7 @@ def check_hashed(password, database_hashed_pw):
     pw = password.encode('utf-8')
     encode_hash = database_hashed_pw.encode("utf-8")
     if bcrypt.checkpw(pw, encode_hash):
-        print(f"Password is {pw.decode('utf-8')}")
+        print(f"password: {pw.decode('utf-8')}")
         return pw.decode('utf-8') 
     else:
         print("Password didn't match")

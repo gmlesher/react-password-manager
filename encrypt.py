@@ -26,17 +26,26 @@ def load_and_dump(acct, password):
             },  
         })
         with open('pw_data.json', 'w') as f: 
-            json.dump(data, f)
+            json.dump(data, f, indent=4)
     else:
         data = old_data
-        data['accounts'].append({
+        # if account name is already in json file, update the password with new 
+        # password, to be written in new json file
+        for app in data['accounts']:
+            if app['app']['name'] == acct:
+                app['app']['password'] = password
+                break
+        # if account name is not already present, write new account and password 
+        # to end of file
+        else:
+            data['accounts'].append({
                 'app': {
                     'name': f'{acct}',
                     'password': f'{password}',
                 },  
             })
         with open('pw_data.json', 'w') as f: 
-            json.dump(data, f)
+            json.dump(data, f, indent=4)
 
 
 def encrypt(password):

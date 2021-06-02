@@ -1,6 +1,6 @@
 import bcrypt
 import os
-from menu import menu, create, find_pw, find_apps
+from menu import menu, create, update_pw, find_pw, find_all, find_apps
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -19,9 +19,14 @@ def main():
             if choice == '1':
                 create()
             if choice == '2':
-                find_pw()
+                update_pw()
             if choice == '3':
+                find_pw()
+            if choice == '4':
+                find_all()
+            if choice == '5':
                 find_apps()
+                choice = menu()
             else:
                 choice = menu()
     else:

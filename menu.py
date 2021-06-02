@@ -2,7 +2,7 @@ from encrypt import encrypt, load_and_dump
 from hash_me import hash_password
 from database import store_passwords, update_password, find_password, find_app_or_website, return_all_data
 from pw_generator import generate_password
-# from another_utils import AskAgainMixin
+from another_prev_dup_utils import AskAgainMixin, prevent_duplicates
 
 def menu():
     """Prints password manager menu and prompts for input of numbered options"""
@@ -21,6 +21,9 @@ def menu():
 def create():
     """Prompts user for each step required to store password and account information"""
     app_name = input('Please provide the name of the site or app you want to generate a password for: ')
+    check = prevent_duplicates(app_name)
+    if check:
+        return create()
     plaintext = generate_password(app_name)
     encrypted = encrypt(plaintext)
     load_and_dump(app_name, encrypted)
@@ -64,12 +67,8 @@ def find_apps():
     find_another_account()
 
 
-# def prevent_duplicates():
-#     """prevents user from making two entries of data for one app/website"""
-#     pass
 
-
-
+# ***********************************************************************************
 
 def create_another():
     """prompts user if they would like to create another 

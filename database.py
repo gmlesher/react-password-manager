@@ -6,16 +6,38 @@ from encrypt import decrypt, retrieve_encrypted_pw
 from dotenv import load_dotenv
 load_dotenv()
 
+
 DB_HOST = os.getenv('DB_HOST')
 DB_NAME = os.getenv('DB_NAME')
 DB_USER = os.getenv('DB_USER')
 DB_PASS = os.getenv('DB_PASS')
+
 
 def connect():
     """Connects to postgres database based on database variables above."""
     try:
         conn = psycopg2.connect(user=DB_USER, password=DB_PASS, host=DB_HOST, dbname=DB_NAME)
         return conn
+    except (Exception, psycopg2.Error) as error:
+        print(error)
+
+
+def find_app_name(app_name):
+    """Checks database for app name. If app name exists, true is returned, else false.
+    Used in conjunction with prevent_duplicates function"""
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        postgres_select_query = f"SELECT app_name FROM accounts WHERE app_name = '{app_name}';"
+        cur.execute(postgres_select_query, app_name)
+        result = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        if not result:
+            return False
+        else:
+            return True
     except (Exception, psycopg2.Error) as error:
         print(error)
 
@@ -33,6 +55,7 @@ def store_passwords(password, email, username, url, app_name):
         conn.close()
     except (Exception, psycopg2.Error) as error:
         print(error)
+
 
 def update_password(new_password, app_name):
     try:

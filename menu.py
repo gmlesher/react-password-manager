@@ -118,9 +118,6 @@ def delete_data():
     print('*'*30)
     print('')
     double_check(app_name)
-    print('')
-    print(f'All {app_name} data has been deleted.')
-    print('')
     delete_another()
 
 
@@ -222,6 +219,9 @@ def double_check(app_name):
     if make_sure.lower() == 'y':
         delete_account(app_name)
         delete_app(app_name)
+        print('')
+        print(f'All {app_name} data has been deleted.')
+        print('')
     elif make_sure.lower() == 'n':
         return
     else:

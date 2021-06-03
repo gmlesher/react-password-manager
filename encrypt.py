@@ -80,3 +80,18 @@ def retrieve_encrypted_pw(app_name):
     
     print(f'No app named "{app_name}" in .json file')
     return 
+
+
+def delete_app(app_name):
+    """opens .json file and deletes app if app_name exists in file"""
+    with open('pw_data.json', 'r') as current_json: 
+            data = json.load(current_json)
+
+    # iterates through .json file to find "app_name", pops it out of json file
+    for i in range(len(data['accounts'])):
+        if data['accounts'][i]['app']['name'] == app_name:
+                data['accounts'].pop(i)
+                break
+    
+    with open('pw_data.json', 'w') as f: 
+            json.dump(data, f, indent=4)

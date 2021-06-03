@@ -1,5 +1,4 @@
 import psycopg2
-import psycopg2.extras
 import os
 from hash_me import check_hashed
 from encrypt import decrypt, retrieve_encrypted_pw
@@ -58,6 +57,7 @@ def store_passwords(password, email, username, url, app_name):
 
 
 def update_password(new_password, app_name):
+    """updates password in database"""
     try:
         conn = connect()
         cur = conn.cursor()
@@ -151,6 +151,7 @@ def find_app_or_website(email):
 
 
 def delete_account(app_name):
+    """deletes all data in database row given app name"""
     try:
         conn = connect()
         cur = conn.cursor()
@@ -159,5 +160,21 @@ def delete_account(app_name):
         conn.commit()
         cur.close()
         conn.close()
+    except (Exception, psycopg2.Error) as error:
+        print(error)
+
+
+def get_all_apps():
+    """retrieves all app names in database"""
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        postgres_select_query = f"SELECT app_name FROM accounts;"
+        cur.execute(postgres_select_query)
+        result = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return [i for app in result for i in app]
     except (Exception, psycopg2.Error) as error:
         print(error)

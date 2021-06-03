@@ -1,6 +1,8 @@
 from encrypt import encrypt, load_and_dump, delete_app
 from hash_me import hash_password
-from database import (delete_account, find_app_name, 
+from database import (delete_account, 
+                    find_app_name, 
+                    get_all_apps, 
                     store_passwords, 
                     update_password, 
                     find_password, 
@@ -11,7 +13,7 @@ from another_prev_dup_utils import AskAgainMixin, prevent_duplicates
 
 def menu():
     """Prints password manager menu and prompts for input of numbered options"""
-    print('Q')
+    print('')
     print('CTRL + C to quit program at any point.')
     print('')
     print('-'*30)
@@ -22,6 +24,7 @@ def menu():
     print('4. Find all data for a site or app')
     print('5. Find all accounts associated with an email')
     print('6. Delete all data for a site or app')
+    print('7. Display all apps/websites in Password Manager')
     print('Q. Exit')
     print('-'*30)
     return input(': ')
@@ -100,6 +103,7 @@ def find_apps():
 
 
 def delete_data():
+    """prompts user for app_name in order to delete all data with that app name"""
     app_name = input('Please provide the name of the site or app you would like to delete: ')
     check = find_app_name(app_name)
     if not check:
@@ -118,6 +122,18 @@ def delete_data():
     print(f'All {app_name} data has been deleted.')
     print('')
     delete_another()
+
+
+def display_all_apps():
+    """displays number of apps and all app names to user"""
+    app_lst = get_all_apps()
+    print('')
+    print(f'There are {len(app_lst)} apps in your account')
+    print('')
+    print('Here are your apps:')
+    print('')
+    for app in sorted(app_lst):
+        print(app)
 
 
 # ***********************************************************************************
@@ -188,6 +204,8 @@ def find_another_account():
 
 
 def delete_another():
+    """prompts user if they would like to delete another account 
+    based on a given app name"""
     ask = input('\nWould you like to delete another account? (y/n): ')
     if ask.lower() == 'y':
         delete_data()
@@ -199,6 +217,7 @@ def delete_another():
 
 
 def double_check(app_name):
+    """prompts user to make sure they want to delete app data"""
     make_sure = input(f"Are you sure you would like to delete {app_name} and all of it's data? (y/n): ")
     if make_sure.lower() == 'y':
         delete_account(app_name)

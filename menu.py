@@ -1,11 +1,19 @@
-from encrypt import encrypt, load_and_dump
+from encrypt import encrypt, load_and_dump, delete_app
 from hash_me import hash_password
-from database import store_passwords, update_password, find_password, find_app_or_website, return_all_data
+from database import (delete_account, find_app_name, 
+                    store_passwords, 
+                    update_password, 
+                    find_password, 
+                    find_app_or_website, 
+                    return_all_data)
 from pw_generator import generate_password
 from another_prev_dup_utils import AskAgainMixin, prevent_duplicates
 
 def menu():
     """Prints password manager menu and prompts for input of numbered options"""
+    print('Q')
+    print('CTRL + C to quit program at any point.')
+    print('')
     print('-'*30)
     print(('-'*13) + 'Menu'+ ('-' *13))
     print('1. Create new password')
@@ -13,6 +21,7 @@ def menu():
     print('3. Find a password for a site or app')
     print('4. Find all data for a site or app')
     print('5. Find all accounts associated with an email')
+    print('6. Delete all data for a site or app')
     print('Q. Exit')
     print('-'*30)
     return input(': ')
@@ -35,10 +44,18 @@ def create():
     url = input('Please paste the url to the site that you are creating the password for: ')
     store_passwords(password, email, username, url, app_name)
     create_another()
+    
 
 def update_pw():
     """prompts user for app/website name to update associated password"""
     app_name = input('Please provide the name of the site or app you want to update the password for: ')
+    check = find_app_name(app_name)
+    if not check:
+        print('')
+        print(f'"{app_name}" does not exist in database.')
+        print('Try again.')
+        print('')
+        return update_pw()
     plaintext = generate_password(app_name)
     encrypted = encrypt(plaintext)
     load_and_dump(app_name, encrypted)
@@ -46,9 +63,17 @@ def update_pw():
     update_password(password, app_name)
     update_another()
 
+
 def find_pw():
     """prompts user for app/website name to access associated password"""
     app_name = input('\nPlease provide the name of app/website you want to find the password to: ')
+    check = find_app_name(app_name)
+    if not check:
+        print('')
+        print(f'"{app_name}" does not exist in database.')
+        print('Try again.')
+        print('')
+        return find_pw()
     find_password(app_name)
     find_another_pw()
 
@@ -56,6 +81,13 @@ def find_pw():
 def find_all():
     """prompts user for app/website name to access all data associated with that account"""
     app_name = input('\nPlease provide the name of app/website you want to find all data for: ')
+    check = find_app_name(app_name)
+    if not check:
+        print('')
+        print(f'"{app_name}" does not exist in database.')
+        print('Try again.')
+        print('')
+        return find_all()
     return_all_data(app_name)
     find_other_data()
 
@@ -66,6 +98,26 @@ def find_apps():
     find_app_or_website(email)
     find_another_account()
 
+
+def delete_data():
+    app_name = input('Please provide the name of the site or app you would like to delete: ')
+    check = find_app_name(app_name)
+    if not check:
+        print('')
+        print(f'"{app_name}" does not exist in database.')
+        print('Try again.')
+        print('')
+        return delete_data()
+    print('')
+    print('*'*30)
+    print(f"THIS ACTION IS NOT REVERSIBLE. \n{app_name.title()} and all of it's data will be permanently deleted!")
+    print('*'*30)
+    print('')
+    double_check(app_name)
+    print('')
+    print(f'All {app_name} data has been deleted.')
+    print('')
+    delete_another()
 
 
 # ***********************************************************************************
@@ -135,6 +187,27 @@ def find_another_account():
         find_another_account()
 
 
+def delete_another():
+    ask = input('\nWould you like to delete another account? (y/n): ')
+    if ask.lower() == 'y':
+        delete_data()
+    elif ask.lower() == 'n':
+        return
+    else:
+        print("\nI didn't understand that input. Please type 'y' or 'n'")
+        delete_another()
+
+
+def double_check(app_name):
+    make_sure = input(f"Are you sure you would like to delete {app_name} and all of it's data? (y/n): ")
+    if make_sure.lower() == 'y':
+        delete_account(app_name)
+        delete_app(app_name)
+    elif make_sure.lower() == 'n':
+        return
+    else:
+        print("\nI didn't understand that input. Please type 'y' or 'n'")
+        double_check(app_name)
 
 
 """Possibly use classes with mixin from 'another_utils.py'in order to keep DRY. 
@@ -173,3 +246,10 @@ Something like this... when refactoring codebase"""
 #     based on a given email"""
 #     ask = input('\nWould you like to find accounts associated with another email? (y/n): ')
 #     return_function = find_apps()
+
+
+# class DeleteAnotherAccount(AskAgainMixin):
+#     """prompts user if they would like to find another account(s) 
+#     based on a given email"""
+#     ask = input('\nWould you like to delete another account? (y/n): ')
+#     return_function = delete_data()

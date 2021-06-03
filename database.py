@@ -24,7 +24,7 @@ def connect():
 
 def find_app_name(app_name):
     """Checks database for app name. If app name exists, true is returned, else false.
-    Used in conjunction with prevent_duplicates function"""
+    Used in conjunction with prevent_duplicates and delete_data function"""
     try:
         conn = connect()
         cur = conn.cursor()
@@ -143,6 +143,19 @@ def find_app_or_website(email):
         else:
             for i in result:
                 print(i[0])
+        conn.commit()
+        cur.close()
+        conn.close()
+    except (Exception, psycopg2.Error) as error:
+        print(error)
+
+
+def delete_account(app_name):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        postgres_delete_query = f"DELETE FROM accounts WHERE app_name = '{app_name}';"
+        cur.execute(postgres_delete_query, app_name)
         conn.commit()
         cur.close()
         conn.close()

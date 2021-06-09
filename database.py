@@ -86,6 +86,7 @@ def find_password(app_name):
         conn.commit()
         cur.close()
         conn.close()
+        return decrypted_pw
     except (Exception, psycopg2.Error) as error:
         print(error)
 

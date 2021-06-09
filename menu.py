@@ -1,3 +1,4 @@
+import subprocess
 from encrypt import encrypt, load_and_dump, delete_app
 from hash_me import hash_password
 from database import (delete_account, 
@@ -40,6 +41,7 @@ def create():
     encrypted = encrypt(plaintext)
     load_and_dump(app_name, encrypted)
     password = hash_password(plaintext)
+    copy_to_clipboard(plaintext) # copy plaintext password to clipboard
     email = input('Please provide a user email for this app or site: ')
     username = input('Please provide a username for this app or site (if applicable): ')
     if username == None:
@@ -64,6 +66,7 @@ def update_pw():
     load_and_dump(app_name, encrypted)
     password = hash_password(plaintext)
     update_password(password, app_name)
+    copy_to_clipboard(plaintext) # copy plaintext password to clipboard
     update_another()
 
 
@@ -77,7 +80,8 @@ def find_pw():
         print('Try again.')
         print('')
         return find_pw()
-    find_password(app_name)
+    password = find_password(app_name)
+    copy_to_clipboard(password) # copy plaintext password to clipboard
     find_another_pw()
 
 
@@ -131,6 +135,11 @@ def display_all_apps():
     print('')
     for app in sorted(app_lst):
         print(app)
+
+def copy_to_clipboard(password):
+    subprocess.run('pbcopy', universal_newlines=True, input=password)
+    print(f'\n{("*")*30}\nPassword copied to clipboard\n{("*")*30}\n')
+    return 
 
 
 # ***********************************************************************************

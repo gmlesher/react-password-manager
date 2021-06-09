@@ -30,6 +30,7 @@ Here are some ideas:
 
 ## Usage
 #### Setup
+- Install dependencies in requirements.txt
 - Create and store master password in .env file (referenced in password_manager.py)
 - Create a postgres database
 - Add database host, name, user, and password to .env file to be used in database.py

@@ -43,8 +43,13 @@ Here are some ideas:
 Demo of each feature below(except 7):
 
 [create password](https://user-images.githubusercontent.com/70789983/121423250-0d1b9980-c93e-11eb-8e35-fa478903fa18.gif)
+
 [update password](https://user-images.githubusercontent.com/70789983/121423272-1147b700-c93e-11eb-8e80-6503336eaf99.gif)
+
 [find password](https://user-images.githubusercontent.com/70789983/121423282-16a50180-c93e-11eb-84b7-439e9b41a398.gif)
+
 [find all data](https://user-images.githubusercontent.com/70789983/121423295-1ad11f00-c93e-11eb-82af-cf7cca5cd0be.gif)
+
 [find all accounts](https://user-images.githubusercontent.com/70789983/121423322-20c70000-c93e-11eb-8531-5dad7ec158c3.gif)
+
 [delete data](https://user-images.githubusercontent.com/70789983/121423338-245a8700-c93e-11eb-8d4c-dbaa64b58f0e.gif)

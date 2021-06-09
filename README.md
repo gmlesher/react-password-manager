@@ -40,16 +40,22 @@ Here are some ideas:
 - Follow menu's numbered prompts to guide you though creating, updating, deleting, and finding account information in database
 
 ## Demo
-Demo of each feature below(except 7):
+Demo of each feature below (except 7):
 
+#### Create Password
 ![create password](https://user-images.githubusercontent.com/70789983/121423250-0d1b9980-c93e-11eb-8e35-fa478903fa18.gif)
 
+#### Update Password
 ![update password](https://user-images.githubusercontent.com/70789983/121423272-1147b700-c93e-11eb-8e80-6503336eaf99.gif)
 
+#### Find Password
 ![find password](https://user-images.githubusercontent.com/70789983/121423282-16a50180-c93e-11eb-84b7-439e9b41a398.gif)
 
+#### Find All Data
 ![find all data](https://user-images.githubusercontent.com/70789983/121423295-1ad11f00-c93e-11eb-82af-cf7cca5cd0be.gif)
 
+#### Find All Accounts
 ![find all accounts](https://user-images.githubusercontent.com/70789983/121423322-20c70000-c93e-11eb-8531-5dad7ec158c3.gif)
 
+#### Delete Data
 ![delete data](https://user-images.githubusercontent.com/70789983/121423338-245a8700-c93e-11eb-8d4c-dbaa64b58f0e.gif)

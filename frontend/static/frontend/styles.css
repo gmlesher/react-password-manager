@@ -1,0 +1,82 @@
+body {
+  box-sizing: border-box;
+}
+.menu,
+.accounts {
+  height: 100vh;
+  overflow: scroll;
+}
+.menu {
+  position: relative;
+}
+.menu-footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+a.vault,
+div.lockIcon,
+a.vault:hover {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+a.vault:hover div,
+div.lockIcon:hover {
+  background-color: grey;
+}
+
+a.active div {
+  background-color: grey;
+}
+a.account,
+a.detailUrl,
+a.account:hover {
+  color: inherit;
+  text-decoration: none;
+}
+a.account:hover > div {
+  background-color: lightgrey;
+}
+a.detailUrl:hover {
+  color: grey;
+}
+h6 span {
+  padding-right: 15px;
+}
+.offcanvas {
+  width: 75%;
+}
+.offcanvas-header {
+  display: flex;
+  flex-direction: row-reverse;
+  align-content: center;
+}
+.offcanvas-title {
+  display: flex;
+  justify-content: center;
+  min-width: 100%;
+  max-width: 100%;
+}
+.icon {
+  height: 36px;
+  width: 36px;
+}
+.lockIcon img {
+  height: 48px;
+  width: 48px;
+}
+/* div.lockIcon:hover {
+  background-color: grey;
+  cursor: pointer;
+} */
+.accountIcon > img {
+  height: auto;
+  width: 60px;
+}
+.detailIcon > img {
+  height: auto;
+  width: 75px;
+  padding-bottom: 10px;
+}

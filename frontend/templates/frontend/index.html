@@ -1,0 +1,23 @@
+{% extends "frontend/base.html" %} 
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+  <div id="app"></div>
+  {% comment %} <h3 class="my-3">Hello, {{ user.first_name }}</h3> {% endcomment %}
+{% else %}
+  <div class="text-center">
+    <h3 class="my-3">Login or Register Here</h3>
+    {% comment %} <a class="btn btn-lg btn-info" href="{% url 'backend:login' %}" role="button">Log in &raquo;</a>
+    <a class="btn btn-lg btn-info" href="{% url 'backend:register' %}" role="button">Register &raquo;</a> {% endcomment %}
+  </div>
+{% endif %}
+
+{% endblock content %}
+
+
+{% block extra_js %} 
+  <script src="{% static 'frontend/main.js' %}"></script>
+
+{% endblock %}

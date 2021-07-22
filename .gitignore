@@ -1,6 +1,12 @@
 # my json file for storing encrypted passwords
 pw_data.json
 
+# vs code settings
+.vscode
+
+# node 
+node_modules/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 .DS_Store

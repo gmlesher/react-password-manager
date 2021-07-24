@@ -36,6 +36,7 @@ class App extends Component {
       account_data: [],
       account_name: "",
       show: false,
+      show_pw: false,
       displayed_form: "",
       logged_in: localStorage.getItem("AccessToken") ? true : false,
       username: "",
@@ -90,12 +91,12 @@ class App extends Component {
     axios
       .post(refresh_API_URL, { refresh: refresh_token })
       .then((response) => {
-        console.log("New access token", response.data.access);
+        // console.log("New access token", response.data.access);
         localStorage.setItem("AccessToken", response.data.access);
       })
       .catch((error) => {
-        console.log(error);
-        console.log("error with refresh token");
+        // console.log(error);
+        // console.log("error with refresh token");
         return this.handle_logout();
       });
   }
@@ -130,6 +131,12 @@ class App extends Component {
       }
     });
     this.setState({ show: true }); // sets show state for acct details slide over
+  };
+
+  toggleShowPassword = () => {
+    return this.setState((prevState) => ({
+      show_pw: !prevState.show_pw,
+    }));
   };
 
   handle_login = (e, data) => {
@@ -187,7 +194,7 @@ class App extends Component {
 
   // sets bootstrap "Offcanvas" show state to false
   handleClose = () => {
-    this.setState({ show: false });
+    this.setState({ show: false, show_pw: false });
   };
 
   display_form = (form) => {
@@ -205,9 +212,10 @@ class App extends Component {
       account_data,
       account_name,
       show,
+      show_pw,
     } = this.state;
 
-    // console.log(this.state.user_id);
+    // console.log(show_pw);
 
     return (
       <React.Fragment>
@@ -232,6 +240,8 @@ class App extends Component {
               onHide={this.handleClose}
               account_name={account_name}
               account_data={account_data}
+              toggleShowPassword={this.toggleShowPassword}
+              show_pw={show_pw}
             />
           </React.Fragment>
         )}

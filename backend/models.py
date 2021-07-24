@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
+from .encrypt import load_and_dump
 
 """Each USER can have many VAULTS. Under a VAULT, there are a set number of 
 CATEGORIES (LOGINS, NOTES, CREDIT CARDS, PASSPORTS, PERSONAL INFO, etc.), 
@@ -48,8 +49,17 @@ class Account(models.Model):
         """Saves account names in title case. Account
         names with multiple words will be capitalized"""
         self.account_name = self.account_name.title()
+        # save first time to set id 
+        super(Account, self).save(*args, **kwargs)
+        # load_and_dump stores encrypted passwds in separate file for each user
+        # must come before "make password" in order to not encrypt the hashed pw
+        load_and_dump(self.account_name, str(self.id), \
+            self.password, self.vault.owner.id) 
         self.password = make_password(self.password)
+        # save a second time to set password as hash and call 
+        # load_and_dump with an account_id
         return super(Account, self).save(*args, **kwargs)
+
 
 
 # class Note(models.Model):

@@ -4,6 +4,7 @@ import HorizontalLine from "./horizontal_line";
 import Icon from "./icon";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
+import Badge from "react-bootstrap/Badge";
 
 class Details extends Component {
   render() {
@@ -49,6 +50,22 @@ class Details extends Component {
     return account_name;
   }
 
+  getBadgeClasses() {
+    const { show_pw } = this.props;
+    return show_pw === true ? "secondary" : "warning";
+  }
+
+  formatBadgeName() {
+    const { show_pw } = this.props;
+    return show_pw === true ? "HIDE" : "SHOW";
+  }
+
+  hideOrShow(val) {
+    // console.log(key);
+    const { show_pw } = this.props;
+    return show_pw === true ? val : "\u2022".repeat(15);
+  }
+
   getAllOtherData() {
     const { account_data } = this.props;
     var data = Object.entries(account_data)
@@ -67,6 +84,34 @@ class Details extends Component {
                   <a className="detailUrl" href={`${val}`} target="_blank">
                     {" "}
                     {val}
+                  </a>
+                </span>
+              </Col>
+            </Row>
+          );
+        } else if (key === "password") {
+          return (
+            <Row key={key} className="py-3">
+              <Col className="text-end text-secondary">
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </Col>
+              <Col className="text-start">
+                {this.hideOrShow(val)}
+                <span className="ms-2">
+                  <a href="#" onClick={() => this.props.toggleShowPassword()}>
+                    <Badge bg={this.getBadgeClasses()}>
+                      {this.formatBadgeName()}
+                    </Badge>
+                  </a>
+                </span>
+                <span className="m-2">
+                  <a
+                    href="#"
+                    onClick={() => {
+                      navigator.clipboard.writeText(val);
+                    }}
+                  >
+                    <Badge bg="secondary">COPY</Badge>
                   </a>
                 </span>
               </Col>

@@ -8,15 +8,15 @@ class MenuFooter extends Component {
     return (
       <div className="menu-footer display-flex flex-row text-center p-3">
         <HorizontalLine />
-        <a onClick={() => this.props.handle_logout()}>
-          <div className="lockIcon w-25 mx-auto">
+        <div className="lockIcon w-25 mx-auto">
+          <a onClick={() => this.props.handle_logout()}>
             <Icon
               specific_icon={"../../static/frontend/lock.png"}
               icon_data={icon_data}
             />
             <div>Lock</div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     );
   }

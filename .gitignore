@@ -1,5 +1,5 @@
 # my json file for storing encrypted passwords
-pw_data.json
+pw_data*.json
 
 # vs code settings
 .vscode

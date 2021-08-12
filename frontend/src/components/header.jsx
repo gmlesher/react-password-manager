@@ -5,6 +5,7 @@ import AddItemBtn from "./add_item_btn";
 
 class Header extends Component {
   render() {
+    const { onAddItem } = this.props;
     return (
       <Navbar collapseOnSelect expand="sm" variant="light">
         <Navbar.Brand>{this.getVaultName()}</Navbar.Brand>
@@ -14,7 +15,10 @@ class Header extends Component {
           id="responsive-navbar-nav"
         >
           <Nav className="ml-auto">
-            <AddItemBtn />
+            <AddItemBtn
+              vault_name={this.getVaultName()}
+              onAddItem={onAddItem}
+            />
           </Nav>
         </Navbar.Collapse>
       </Navbar>

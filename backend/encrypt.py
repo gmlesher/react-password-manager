@@ -23,10 +23,7 @@ def decrypt(encrypted_password):
     cipher_suite = Fernet(key)
     unciphered_text = cipher_suite.decrypt(encrypted_password)
     plaintext_unciphered = unciphered_text.decode('utf-8')
-    # print(plaintext_unciphered)
     return plaintext_unciphered
-
-# decrypt("gAAAAABg-3NoB5Isa3Z7Qly2sMzSrWFoIVxArlWUZV6WV2LoKByoyZpDs4TUc4bVddWy9If7boVoZBGchRp2JKfqIB0WeBYC_Q==")
 
 
 def load_and_dump(acct, acct_id, password, user_id):
@@ -84,9 +81,6 @@ def load_and_dump(acct, acct_id, password, user_id):
             json.dump(new_data, f, indent=4)
 
 
-# load_and_dump("Youtube", "4", "youtubepw", 1)
-
-
 def retrieve_encrypted_pw(acct, acct_id, user_id):
     """opens .json file and retrieves encrypted password based on the account name 
     given in option #2 of the menu"""
@@ -100,21 +94,3 @@ def retrieve_encrypted_pw(acct, acct_id, user_id):
             return decrypted
     
     return "No password found"
-
-
-# retrieve_encrypted_pw("Snapchat", "17", 1)
-
-
-# def delete_account(account_name):
-#     """opens .json file and deletes account if account_name exists in file"""
-#     with open(f'pw_data_user_{user_id}.json', 'r') as current_json: 
-#             data = json.load(current_json)
-
-#     # iterates through .json file to find "account_name", pops it out of json file
-#     for i in range(len(data['accounts'])):
-#         if data['accounts'][i]['account']['name'] == account_name:
-#                 data['accounts'].pop(i)
-#                 break
-    
-#     with open(f'pw_data_user_{user_id}.json', 'w') as f: 
-#             json.dump(data, f, indent=4)

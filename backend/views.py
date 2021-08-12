@@ -1,12 +1,18 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import views, viewsets, permissions
+from rest_framework import serializers, views, viewsets, permissions
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import Vault, Account
-from .serializers import (VaultSerializer, 
-                        AccountSerializer, 
+from .pw_generator import generate_password
+from .serializers import (
+                        AccountReadSerializer, 
+                        AccountSerializer,
+                        GeneratePasswordSerializer,
+                        VaultSerializer, 
                         UserSerializer, 
-                        GroupSerializer)
+                        GroupSerializer,
+                                        )
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -48,7 +54,7 @@ class AccountListSet(viewsets.ModelViewSet):
     API endpoint that allows accounts to be viewed or edited.
     """
     queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+    # serializer_class = AccountSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -56,6 +62,22 @@ class AccountListSet(viewsets.ModelViewSet):
         return Account.objects.filter(vault__owner=user)\
             .filter(vault=self.kwargs['vault_pk'])
 
+    def perform_create(self, serializer):
+        """finds vault_id value from request path and saves"""
+        # print(self.request.user.is_authenticated)
+        request_path  = self.request.path
+        start = request_path.find("/vaults/") + len("/vaults/")
+        end = request_path.find("/accounts/")
+        vault_id = request_path[start:end] 
+        serializer.save(vault_id=vault_id)
 
-    # def perform_create(self, serializer):
-    #     serializer.save(owner=self.request.user)
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return AccountReadSerializer
+        return AccountSerializer
+
+    
+@api_view()
+def generate_password_view(request):
+    password = generate_password()
+    return Response({'generated_password': password})

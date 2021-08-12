@@ -99,7 +99,7 @@ class Details extends Component {
                 {this.hideOrShow(val)}
                 <span className="ms-2">
                   <a href="#" onClick={() => this.props.toggleShowPassword()}>
-                    <Badge bg={this.getBadgeClasses()}>
+                    <Badge pill bg={this.getBadgeClasses()}>
                       {this.formatBadgeName()}
                     </Badge>
                   </a>
@@ -111,7 +111,9 @@ class Details extends Component {
                       navigator.clipboard.writeText(val);
                     }}
                   >
-                    <Badge bg="secondary">COPY</Badge>
+                    <Badge pill bg="secondary">
+                      COPY
+                    </Badge>
                   </a>
                 </span>
               </Col>

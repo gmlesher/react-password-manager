@@ -15,7 +15,7 @@ class Vault(models.Model):
     """Defines a user in application"""
     vault_name = models.CharField(max_length=25)
     owner = models.ForeignKey('auth.User', 
-                                on_delete=models.CASCADE)
+                                on_delete=models.CASCADE, related_name="vaults")
 
     class Meta:
         ordering = ['vault_name']
@@ -33,7 +33,7 @@ class Account(models.Model):
     account_name = models.CharField(max_length=25)
     password = models.CharField(max_length=255)
     username = models.CharField(max_length=25)
-    email = models.EmailField()
+    email = models.EmailField(blank=True)
     url = models.URLField()
     vault = models.ForeignKey(Vault, on_delete=models.CASCADE, 
                                 related_name='accounts')
@@ -58,7 +58,7 @@ class Account(models.Model):
         self.password = make_password(self.password)
         # save a second time to set password as hash and call 
         # load_and_dump with an account_id
-        return super(Account, self).save(*args, **kwargs)
+        return super(Account, self).save()
 
 
 

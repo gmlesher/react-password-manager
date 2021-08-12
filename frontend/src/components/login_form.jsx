@@ -20,7 +20,7 @@ class LoginForm extends Component {
             // console.log(this.state);
           }}
         >
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"

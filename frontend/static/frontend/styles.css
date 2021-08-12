@@ -26,10 +26,20 @@ a.vault:hover div,
 div.lockIcon:hover {
   background-color: grey;
 }
-
 a.active div {
   background-color: grey;
 }
+.showPasswordBadge {
+  position: absolute;
+  right: -65px;
+  top: 10px;
+}
+.generatePasswordBadge {
+  position: absolute;
+  right: -155px;
+  top: 10px;
+}
+
 a.account,
 a.detailUrl,
 a.account:hover {
@@ -38,6 +48,17 @@ a.account:hover {
 }
 a.account:hover > div {
   background-color: lightgrey;
+}
+.accountButton {
+  background: #f8f9fa; /* bootstrap 5 gray-100 color. matches accounts background */
+  width: 70px;
+  text-align: center;
+  display: none;
+}
+a.account:hover > div > div > span .accountButton {
+  /* background: lightgrey; */
+  display: inline;
+  z-index: 2;
 }
 a.detailUrl:hover {
   color: grey;

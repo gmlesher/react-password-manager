@@ -13,6 +13,13 @@ The purposes for building the project this way were as follows:
 4. Learning how to append, replace, and delete JSON data with python
 5. Learn secure ways to generate high quality passwords for users
 
+## Features
+- Built using Django REST API framework
+- Passwords are hashed and stored in postrgres database
+- Passwords are encrypted and stored in a local file that is secured with other data
+- Optional secure password generator when adding an account
+- Multiple user vaults can be added
+
 ## Future
 In the future, I would like to give this application more functionality. 
 
@@ -20,7 +27,7 @@ Here are some ideas:
 - Add option to enable two-factor authorization to log in
 - Allow mulitple users to create their own vault and give permission to share vault info with other trusted users
 - Restructue code into class based functions for reusability where applicable
-
+- Ability to save username and password data when logging into accounts
 
 ## Demo
 

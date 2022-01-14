@@ -19,6 +19,7 @@ The purposes for building the project this way were as follows:
 - Passwords are encrypted and stored in a local file that is secured with other data
 - Optional secure password generator when adding an account
 - Multiple user vaults can be added
+- Automatically generated account image using [clearbit API tool](https://clearbit.com/logo)
 
 ## Future
 In the future, I would like to give this application more functionality. 
